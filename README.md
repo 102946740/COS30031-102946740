@@ -1,11 +1,10 @@
-# GP-base
-The base repository for Games Programming @ Swinburne University. Students are expected to fork the repository to do their coursework. Pull requests from students &amp; tutors for bug fixes, suggestions, etc. welcome!
-
 ## Students, remove the above text and modify the below, following the instructions.
 
 ## Who Am I?
+  - Benjamin Fekete
+  - 102946740
+  - 102946740@student.swin.edu.au
 
-TODO: Add your name, student id, and easy email link here, formatted as a unordered list.
 
 ## Purpose
 
@@ -22,11 +21,6 @@ TODO: Add your name, student id, and easy email link here, formatted as a unorde
 * We have provided a basic .gitignore file. You may not see it if your OS hides "hidden" files like this starting with a period. If you don't know about .gitignore files, you should learn about them. It helps you avoid filling your repository with unnecessary files and possibly running out of space.
 
 ## Anything Else?
-
-TODO: You can use this file as a quick way to get to useful locations in your repository, links to resources/notes and other handy details. It is here for you.
-
-TODO: You can delete all the text we have put here to start with, but keep the essential "who am I" details in some form.
-
 A useful "README" file is considered a good practice for shared or world-visible repositories, so it makes sense to get into the
 habit for this unit. However, please keep in mind that this repository should NOT be made visible to the world.
 
