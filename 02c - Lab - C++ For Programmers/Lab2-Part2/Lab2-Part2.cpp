@@ -44,6 +44,8 @@ Updates
 
 *******************************************************************************/
 
+
+
 #define SECTION1 false;
 #define SECTION2 false;
 #define SECTION3 false;
@@ -59,7 +61,7 @@ using namespace std;
 // ##Q.1	What is the difference between a struct and a class?
 struct Particle
 {
-	unsigned int age;
+	int age; //changed to allow for negative numbers
 	int x;
 	int y;
 };
@@ -72,7 +74,7 @@ void showParticle(Particle);
 // ##Q3.1	Could you add variable names? Would that be good?
 Particle createParticleWith(int, int, int);
 
-void setParticleWith(Particle, int, int, int);
+void setParticleWith(Particle*, int, int, int);
 
 void showParticleArray(Particle*, int);
 
@@ -86,7 +88,7 @@ int main()
 #if SECTION1
 	//Warm up. Create a particle, set values, show to screen
 	cout << " << Section 1 >>" << endl;
-	Particle a;
+	Particle a{};
 	// ##Q.5	un-initialised values ... what prints and why? 
 	// NOTE: your IDE might be giving you a warning or error - if so note that in your answer (and fix).
 	cout << "Q.5: a with uninitialised values ... ";
@@ -126,7 +128,7 @@ int main()
 	cout << " << Section 3 >>" << endl;
 	// This compiles/runs, but ...
 	Particle p1 = { 1,1,1 };
-	setParticleWith(p1, 5, 6, 7);
+ 	setParticleWith(&p1, 5, 6, 7);
 	cout << "Q.10: b with 5,6,7 ... ";
 	// ##Q.10	showParticle(p1) doesn't show 5,6,7 ... Why?
 	// HINT: step-into functions with debugger and inspect values (and addresses)...
@@ -176,7 +178,7 @@ int main()
 #if SECTION5
 	// 5. Array of structs
 	cout << " << Section 5 >>" << endl;
-	// NOTE: plain old array - not a fancy std::array
+	// NOTE: plain old array - not a fancy std::array (plain > std::)
 	Particle p_array1[3];
 	p_array1[0] = createParticleWith(1, 2, 3);
 	p_array1[1] = createParticleWith(4, 5, 6);
@@ -215,7 +217,7 @@ int main()
 	// ##Q.23	Change the size argument to 10 (or similar). What happens?
 	// ##Q23.1	You might see some values that we set earlier. Why would this happen?
 	cout << "Q.23: Array position overrun ... " << endl;
-	showParticleArray(p_array2, 3); // <-- change size from 3 to 10
+	showParticleArray(p_array2, 10); // <-- change size from 3 to 10
 #endif
 
 #if SECTION6
@@ -224,7 +226,7 @@ int main()
 	cout << "Q.24: Warm up concept checks ... " << endl;
 	// ##Q24	Points to nothing - does it?
 	Particle* p1_ptr; 
-	cout << " - pointer address (does it?): " << hex << p1_ptr << endl;
+	//cout << " - pointer address (does it?): " << hex << p1_ptr << endl;
 	Particle p1 = { 9,9,9 }; // a real and initialised Particle variable
 	cout << " - pointer address of p1:" << hex << &p1 << endl;
 	p1_ptr = &p1; // copy the point to the same particle
@@ -249,7 +251,7 @@ int main()
 	cout << "Q.28 Can we still show value at pointer address? (It was deleted, so ...) " << endl;
 	cout << " - pointer address " << hex << p1_ptr << endl;
 	// ##Q.28	What happens when we try this? Explain.
-	showParticle((*p1_ptr));
+	//showParticle((*p1_ptr));
 
 	cout << "Q.29 nullptr vs NULL vs 0 ... for pointers." << endl;
 	// house keeping - if a pointer isn't valid, set it to nullptr/NULL
@@ -339,11 +341,11 @@ Particle createParticleWith(int age, int x, int y)
 	return result;
 }
 
-void setParticleWith(Particle p, int age, int x, int y)
+void setParticleWith(Particle* p, int age, int x, int y) // Changed particle to pointer to ensure we are editing the editing the stored memory and not a copy of Particle
 {
-	p.age = age;
-	p.x = x;
-	p.y = y;
+	p->age = age;
+	p->x = x;
+	p->y = y;
 }
 
 void showParticleArray(Particle* p_array, int size)
@@ -352,7 +354,7 @@ void showParticleArray(Particle* p_array, int size)
 	// we pass a pointer to the first element of the array!
 	// ... and the length. Which might be wrong.
 	cout << "showParticleArray call ..." << endl;
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < size - 1; i++) { // - 1 because the size may be 10 but there may only be 9 elements
 		cout << " - pos=" << i << " ";
 		showParticle(p_array[i]);
 	}
