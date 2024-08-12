@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include <cctype>
+#include <windows.h> 
 
 enum State
 {
@@ -25,6 +27,11 @@ char map[MAP_H][MAP_W] = {
     {'#','#',' ','#','#','#','#','#'}
 };
 
+void setConsoleColor(int color) {
+    // Set console text color using Windows API
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+}
 
 
 int Location[2] = {7 , 2};
@@ -128,15 +135,16 @@ void renderLoop() {
         for (int j = 0; j < MAP_W; j++) {
             if (i == Location[0] && j == Location[1])
             {
-                system("color 3a");
-                std::cout << "p";
+                setConsoleColor(0x0B);
+                std::cout << "P";
             }
             else {
-                system("color 0a");
+                setConsoleColor(0x0A);
                 std::cout << map[i][j];
             }
             
         }
         std::cout << "\n";
+        setConsoleColor(0x0F);
     }
 }
