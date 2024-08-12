@@ -31,6 +31,7 @@ int Location[2] = {7 , 2};
 
 int main()
 {
+    system("color 0a"); // to change colour of screen lol
     gameLoop();
     return 0;
 }
@@ -127,9 +128,11 @@ void renderLoop() {
         for (int j = 0; j < MAP_W; j++) {
             if (i == Location[0] && j == Location[1])
             {
+                system("color 3a");
                 std::cout << "p";
             }
             else {
+                system("color 0a");
                 std::cout << map[i][j];
             }
             
