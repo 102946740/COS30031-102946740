@@ -10,8 +10,8 @@ enum State
     Alive, Dead, Win
 };
 
-void renderLoop();
-void input(State& pState);
+void renderLoop(State pState);
+State input();
 void gameLoop();
 const int MAP_H = 8;
 const int MAP_W = 8;
@@ -48,88 +48,76 @@ void gameLoop() {
     bool Loop = true;
 
     while (Loop) {
-    
-        switch (pState)
-        {
-        case Alive:
-            renderLoop();
-            input(pState);
-            break;
-        case Dead:
-            renderLoop();
-            std::cout << "You Died, Game Over \n";
-            Loop = false;
-            break;
-        case Win:
-            renderLoop();
-            std::cout << "YOU WIN TOP G\n";
-            Loop = false;
-            break;
+        renderLoop(pState);
+        if (pState == Alive) {
+            pState = input();
         }
+        else {
+            Loop = false;
+        }
+        
 
     }
     
 }
 
-void input(State& pState) {
+
+
+bool checkNextLocation(char location_contents, State &returnState) {
+    if (location_contents == ' ') {
+        return true;
+    }
+    if (location_contents == 'D') {
+        returnState = Dead;
+        return true;
+    }
+    if (location_contents == 'G') {
+        returnState = Win;
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+State input() {
     char direction;
+    State NewState = Alive;
     std::cout << "What direction to move?" << "\n" << "N (north) S (south) E (east) W (west): \n";
     std::cin >> direction;
 
-    if (std::toupper(direction) == 'N') { //location 1 for left right location 0 for up down
-        if (map[Location[0]-1][Location[1]] == ' ') {
-            Location[0]--; //-- for moving up
-        } else if (map[Location[0] - 1][Location[1]] == 'D') {
-            pState=Dead;
+
+    if (std::toupper(direction) == 'N') {
+        if (checkNextLocation(map[Location[0] - 1][Location[1]],NewState)) {
             Location[0]--;
-        }
-        else if (map[Location[0] - 1][Location[1]] == 'G') {
-            pState = Win;
-            Location[0]--;
+
         }
     }
-    else if (std::toupper(direction) == 'S') {
-        if (map[Location[0] + 1][Location[1]] == ' ') {
-            Location[0]++; //++ for moving down
-        }
-        else if (map[Location[0] + 1][Location[1]] == 'D') {
-            pState = Dead;
+    if (std::toupper(direction) == 'S') {
+        if (checkNextLocation(map[Location[0] + 1][Location[1]], NewState)) {
             Location[0]++;
-        }
-        else if (map[Location[0] + 1][Location[1]] == 'G') {
-            pState = Win;
-            Location[0]++;
+ 
         }
     }
     else if (std::toupper(direction) == 'W') {
-        if (map[Location[0]][Location[1] - 1] == ' ') {
-            Location[1]--; //-- for moving left
-        }
-        else if (map[Location[0]][Location[1] - 1] == 'D') {
-            pState = Dead;
+        if (checkNextLocation(map[Location[0]][Location[1] - 1], NewState)) {
             Location[1]--;
-        }
-        else if (map[Location[0]][Location[1] - 1] == 'G') {
-            pState = Win;
-            Location[1]--;
+
         }
     }
     else if (std::toupper(direction) == 'E') {
-        if (map[Location[0]][Location[1] + 1] == ' ') {
-            Location[1]++; //++ for moving right
-        }
-        else if (map[Location[0]][Location[1] + 1] == 'D') {
-            pState = Dead;
+        if (checkNextLocation(map[Location[0]][Location[1] + 1], NewState)) {
             Location[1]++;
-        }
-        else if (map[Location[0]][Location[1] + 1] == 'G') {
-            pState = Win;
-            Location[1]++;
+
         }
     }
+
+
+    return NewState;
 }
 
-void renderLoop() {
+void renderLoop(State pstate) {
+
     system("cls"); //win command to clear screen
     for (int i = 0; i < MAP_H; i++) {
         for (int j = 0; j < MAP_W; j++) {
@@ -147,4 +135,19 @@ void renderLoop() {
         std::cout << "\n";
         setConsoleColor(0x0F);
     }
+    switch (pstate) {
+    case Alive:
+        break;
+    case Win:
+        setConsoleColor(0x0E);
+        std::cout << "You Win";
+        break;
+    case Dead:
+        setConsoleColor(0x0C);
+        std::cout << "You Lose";
+        break;
+    default:
+        break;
+    }
+    
 }

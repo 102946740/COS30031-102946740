@@ -5,17 +5,17 @@
 #include <cctype>
 #include <windows.h> 
 #include <thread>
-#include <mutex>
+
 
 enum State {
     Alive, Dead, Win
 };
+State pState = Alive;
 
 bool positionChanged = true; // Initially true to render the first frame
 
-
 void renderLoop();
-void input(State& pState);
+void input();
 void gameLoop();
 const int MAP_H = 8;
 const int MAP_W = 8;
@@ -38,7 +38,6 @@ void setConsoleColor(int color) {
 }
 
 int Location[2] = { 7, 2 };
-std::mutex mtx;  // Mutex for synchronizing input and render
 
 int main() {
     system("color 0a"); // to change colour of screen lol
@@ -47,91 +46,87 @@ int main() {
 }
 
 void gameLoop() {
-    State pState = Alive;
     bool Loop = true;
 
-    std::thread Input_Thread(input, std::ref(pState));
+    std::thread inputThread(input);
 
     while (Loop) {
         if (positionChanged) {
-            std::thread Render_Thread(renderLoop);
-            Render_Thread.join();
+            std::thread renderThread(renderLoop);
+            renderThread.join();
             positionChanged = false; // Reset the flag after rendering
         }
-
-        switch (pState) {
-        case Alive:
-            break;
-        case Dead:
-            renderLoop();
-            setConsoleColor(0x0C);
-            std::cout << "You Died, Game Over \n";
+        if (pState == Dead || pState == Win) {
             Loop = false;
-            break;
-        case Win:
-            renderLoop();
-            setConsoleColor(0x0E);
-            std::cout << "YOU WIN TOP G\n";
-            Loop = false;
-            break;
         }
     }
 
-    Input_Thread.detach(); // Detach the input thread at the end of the game loop
+    inputThread.join();
 }
 
-void input(State& pState) {
+bool checkNextLocation(char location_contents) {
+    if (location_contents == ' ') {
+        return true;
+    }
+    if (location_contents == 'D') {
+        pState = Dead;
+        return true;
+    }
+    if (location_contents == 'G') {
+        pState = Win;
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void input() {
     while (pState == Alive) {
         if (GetAsyncKeyState('N') & 0x8000) {
-            std::lock_guard<std::mutex> lock(mtx);
-            if (Location[0] > 0 && (map[Location[0] - 1][Location[1]] == ' ' || map[Location[0] - 1][Location[1]] == 'D' || map[Location[0] - 1][Location[1]] == 'G')) {
-                if (map[Location[0] - 1][Location[1]] == 'D') pState = Dead;
-                if (map[Location[0] - 1][Location[1]] == 'G') pState = Win;
+            if (checkNextLocation(map[Location[0]-1][Location[1]])) {
                 Location[0]--;
                 positionChanged = true;
+                
             }
-            Sleep(150); // Add delay to prevent rapid movement
         }
-        if (GetAsyncKeyState('S') & 0x8000) {
-            std::lock_guard<std::mutex> lock(mtx);
-            if (Location[0] < MAP_H - 1 && (map[Location[0] + 1][Location[1]] == ' ' || map[Location[0] + 1][Location[1]] == 'D' || map[Location[0] + 1][Location[1]] == 'G')) {
-                if (map[Location[0] + 1][Location[1]] == 'D') pState = Dead;
-                if (map[Location[0] + 1][Location[1]] == 'G') pState = Win;
+        else if (GetAsyncKeyState('S') & 0x8000) {
+            if (checkNextLocation(map[Location[0] + 1][Location[1]])) {
                 Location[0]++;
                 positionChanged = true;
+                
             }
-            Sleep(150);
         }
-        if (GetAsyncKeyState('W') & 0x8000) {
-            std::lock_guard<std::mutex> lock(mtx);
-            if (Location[1] > 0 && (map[Location[0]][Location[1] - 1] == ' ' || map[Location[0]][Location[1] - 1] == 'D' || map[Location[0]][Location[1] - 1] == 'G')) {
-                if (map[Location[0]][Location[1] - 1] == 'D') pState = Dead;
-                if (map[Location[0]][Location[1] - 1] == 'G') pState = Win;
+        else if (GetAsyncKeyState('W') & 0x8000) {
+            if (checkNextLocation(map[Location[0]][Location[1] - 1])) {
                 Location[1]--;
                 positionChanged = true;
+  
             }
-            Sleep(150);
         }
-        if (GetAsyncKeyState('E') & 0x8000) {
-            std::lock_guard<std::mutex> lock(mtx);
-            if (Location[1] < MAP_W - 1 && (map[Location[0]][Location[1] + 1] == ' ' || map[Location[0]][Location[1] + 1] == 'D' || map[Location[0]][Location[1] + 1] == 'G')) {
-                if (map[Location[0]][Location[1] + 1] == 'D') pState = Dead;
-                if (map[Location[0]][Location[1] + 1] == 'G') pState = Win;
+        else if (GetAsyncKeyState('E') & 0x8000) {
+            if (checkNextLocation(map[Location[0]][Location[1] + 1])) {
                 Location[1]++;
                 positionChanged = true;
+                
             }
-            Sleep(150);
         }
+        Sleep(150);
+        
     }
+    
 }
+
+
 
 
 void renderLoop() {
-    std::lock_guard<std::mutex> lock(mtx);  // Lock mutex for synchronized access
-    system("cls"); // Win command to clear screen
+
+    system("cls"); //win command to clear screen
     for (int i = 0; i < MAP_H; i++) {
         for (int j = 0; j < MAP_W; j++) {
-            if (i == Location[0] && j == Location[1]) {
+            if (i == Location[0] && j == Location[1])
+            {
                 setConsoleColor(0x0B);
                 std::cout << "P";
             }
@@ -139,10 +134,29 @@ void renderLoop() {
                 setConsoleColor(0x0A);
                 std::cout << map[i][j];
             }
+
         }
         std::cout << "\n";
         setConsoleColor(0x0F);
-        
     }
-    std::cout << "Press N,S,E,W to move\n";
+    switch (pState) {
+    case Alive:
+        std::cout << "Use N, E, S, W to move";
+        break;
+    case Win:
+        setConsoleColor(0x0E);
+        std::cout << "You Win";
+        break;
+    case Dead:
+        setConsoleColor(0x0C);
+        std::cout << "You Lose";
+        break;
+    default:
+        break;
+    }
+    while (!positionChanged) {
+
+    }
+    Sleep(16);
+
 }
