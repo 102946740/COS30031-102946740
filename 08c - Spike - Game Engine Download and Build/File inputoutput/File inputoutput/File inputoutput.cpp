@@ -2,19 +2,61 @@
 //
 
 #include <iostream>
+#include <fstream>
+
+struct person {
+    char Initial;
+    int Age;
+    float Height;
+};
+
+void printPerson(person);
+
+void writeFile(std::string file, person p);
+
+person readFile(std::string);
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    person Ben{
+        'B',
+        22,
+        6.1
+    };
+
+    writeFile("person.dat", Ben); //ios::binary makes file type binary
+    person Ben2 = readFile("person.dat");
+    printPerson(Ben2);
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void printPerson(person p){
+    std::cout << "Initial; " << p.Initial << " Age; " << p.Age << " Height; " << p.Height << "\n";
+};
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void writeFile(std::string file, person p) {
+    std::ofstream wFile(file, std::ios::binary);
+    if (!wFile) { //  checks file is valid
+        std::cout << "ERROR FILE INVALID\n";
+    }
+    else {
+        std::cout << "File created\n";
+    }
+    wFile.write((char*)&p, sizeof(person)); //size of input used for size of data needed to be written
+    //ofstream.write uses binary writing and not string/char values, avoid using << when not needed
+    wFile.close();
+}
+
+person readFile(std::string file) {
+    std::ifstream rFile;
+    rFile.open(file, std::ios::binary);
+    if (!rFile) { //  checks file is valid
+        std::cout << "ERROR, NO FILE FOUND\n";
+    }
+    else {
+        std::cout << "File found :D\n";
+    }
+    person temp;
+    rFile.read(reinterpret_cast<char*>(&temp), sizeof(temp)); //does a cast to find dat
+    rFile.close();
+    return temp;
+}
