@@ -1,6 +1,12 @@
 // File inputoutput.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+/*
+Reasources used
+https://www.w3schools.com/cpp/cpp_files.asp
+https://www.tutorialspoint.com/reading-and-writing-binary-file-in-c-cplusplus
+*/
+
 #include <iostream>
 #include <fstream>
 
