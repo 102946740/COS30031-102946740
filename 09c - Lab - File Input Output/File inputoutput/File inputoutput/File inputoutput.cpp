@@ -6,10 +6,12 @@ Reasources used
 https://www.w3schools.com/cpp/cpp_files.asp
 https://www.tutorialspoint.com/reading-and-writing-binary-file-in-c-cplusplus
 */
-
+#include "json.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
+
+
 
 struct person {
     char Initial;
@@ -24,6 +26,7 @@ void writeFile(std::string file, person p);
 person readFile(std::string);
 
 void readTest2();
+void readJson();
 
 int main()
 {
@@ -80,7 +83,7 @@ void readTest2() {
 
         while (std::getline(rFile, line)) {
 
-            if (!(line[0] == '#' or line == "")) {
+            if (!(line[0] == '#' or line.empty())) {
 
                 int pos = 0;
 
@@ -97,5 +100,20 @@ void readTest2() {
     }
     else {
         std::cout << "Unable to open file!" << "\n";
+    }
+}
+
+void readJson() {
+    std::ifstream rFile;
+    rFile.open("test3.json");
+
+    if (rFile.is_open()) {
+        
+        nlohmann::json jsonData;
+        rFile >> jsonData;
+
+        rFile.close();
+
+        std::cout << jsonData.dump(4) << std::endl;
     }
 }
