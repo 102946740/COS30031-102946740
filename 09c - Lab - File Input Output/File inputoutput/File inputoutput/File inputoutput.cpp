@@ -9,6 +9,7 @@ https://www.tutorialspoint.com/reading-and-writing-binary-file-in-c-cplusplus
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 struct person {
     char Initial;
@@ -22,6 +23,8 @@ void writeFile(std::string file, person p);
 
 person readFile(std::string);
 
+void readTest2();
+
 int main()
 {
     person Ben{
@@ -33,6 +36,8 @@ int main()
     writeFile("person.dat", Ben); //ios::binary makes file type binary
     person Ben2 = readFile("person.dat");
     printPerson(Ben2);
+
+    readTest2();
 }
 
 void printPerson(person p){
@@ -65,4 +70,32 @@ person readFile(std::string file) {
     rFile.read(reinterpret_cast<char*>(&temp), sizeof(temp)); //does a cast to find dat
     rFile.close();
     return temp;
+}
+
+void readTest2() {
+    std::ifstream rFile;
+    rFile.open("test2.txt");
+    std::string line;
+    if (rFile.is_open()) {
+
+        while (std::getline(rFile, line)) {
+
+            if (!(line[0] == '#' or line == "")) {
+
+                int pos = 0;
+
+                while ((pos = line.find(':', pos)) != std::string::npos) {
+                    line.insert(pos + 1, "\n");
+                    pos += 2; 
+                }
+
+                std::cout << line << "\n";
+            }
+            
+        }
+        rFile.close();
+    }
+    else {
+        std::cout << "Unable to open file!" << "\n";
+    }
 }
