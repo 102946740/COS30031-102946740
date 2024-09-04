@@ -16,7 +16,7 @@ struct itemStruc {
     int EffectMod;
 };
 
-class item {
+class item { // we make a class to store the item struct so we can add individual method overides for things like USE(), using a sword vs using a Potion will act differently
     
 public:
     itemStruc Info;
