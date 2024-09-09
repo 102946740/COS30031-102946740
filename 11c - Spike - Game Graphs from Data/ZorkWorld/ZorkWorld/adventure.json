@@ -1,0 +1,15 @@
+{
+    "Rooms": [
+        { "Name": "Test Room", 
+        "Description": "This is a room, its a cool room", 
+        "Items": ["Beans", "Spaghetti"], 
+        "Conections": ["Pool Room", "Game Room"]},
+
+        {"Name": "Pool Room",
+        "Description": " A Room with pool tables"},
+
+        {"Name": "Game Room",
+        "Description": "A Room with many games"}
+    ]
+
+}
