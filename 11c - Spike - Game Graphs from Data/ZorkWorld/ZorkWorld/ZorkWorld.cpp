@@ -4,13 +4,13 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "Inventory.h" // Assuming you're handling inventory with this
+#include "Inventory.h"
 
 class Location {
 public:
     std::string name;
     std::string description;
-    std::vector<std::string> items;
+    std::vector<std::string> items; //doesnt need item class yet, just testing
     std::vector<std::string> connections;
 
     // Function to load data from JSON into this object
