@@ -9,8 +9,8 @@ void LookAtCommand::execute(const std::vector<std::string>& args)
 
     std::string entityName = args[0];
     for (const auto& entity : (*currentLocation)->entities) {
-        if (entity.name == entityName) {
-            entity.printEntity();
+        if (entity->Info.Name == entityName) {
+            entity->printEntity();
             return;
         }
     }

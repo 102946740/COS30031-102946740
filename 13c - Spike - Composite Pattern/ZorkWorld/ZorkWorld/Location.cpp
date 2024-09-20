@@ -9,9 +9,23 @@ void Location::loadFromJson(const nlohmann::json& json)
 
     if (json.contains("Entities")) {
         for (const auto& entityJson : json["Entities"]) {
-            Entity entity;
-            entity.loadFromJson(entityJson);
-            entities.push_back(entity);
+            if (entityJson.contains("Inventory")) {  // Checks json if its inventory
+
+                auto inventory = std::make_shared<Inventory>();
+                inventory->loadFromJson(entityJson);
+
+                for (const auto& inventoryJson : entityJson["Inventory"]) {
+                    auto item = std::make_shared<Item>();
+                    item->loadFromJson(inventoryJson);
+                    inventory->addItem(*item);
+                }
+                entities.push_back(inventory);
+            }
+            else {  // Regular item
+                auto item = std::make_shared<Item>();
+                item->loadFromJson(entityJson);
+                entities.push_back(item);
+            }
         }
     }
 }
@@ -29,7 +43,7 @@ void Location::printLocation() const
     }
     std::cout << "\nEntities: ";
     for (const auto& entity : entities) {
-        entity.printEntity();
+        entity->printEntity();  // Call the appropriate printEntity() based on the actual type
     }
     std::cout << "\n";
 }

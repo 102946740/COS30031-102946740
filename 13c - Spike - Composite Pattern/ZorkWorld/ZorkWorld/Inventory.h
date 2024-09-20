@@ -2,28 +2,39 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "json.hpp"
 class GameObject {
 };
 
-struct itemStruc {
+struct itemStruc : public GameObject {
     std::string Identifier;
     std::string Name;
     std::string Description;
-    int EffectMod;
+    int EffectMod = 0;
 };
-
-class item : public GameObject {
+class Entity {
 public:
+    virtual ~Entity() = default;
     itemStruc Info;
-    item(itemStruc NewItem);
+    virtual void loadFromJson(const nlohmann::json& json);
+
+    virtual void printEntity() const;
 };
 
-class Inventory : public GameObject {
+class Item : public Entity {
+public:
+    Item() = default;
+    void loadFromJson(const nlohmann::json& json);
+    void printEntity() const override;
+};
+
+class Inventory : public Entity {
 private:
-    std::vector<item> items;
+    std::vector<Item> items;
 
 public:
-    void AddItem(item ItemAdded);
-    void RemoveItem(int index);
-    void ShowInventory();
+    void addItem(Item ItemAdded);
+    void removeItem(int index);
+    void printEntity() const override;
+    void printInventory() const;
 };

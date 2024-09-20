@@ -12,20 +12,21 @@
       
           },
           {
+            "Inventory": [
+              {
+                "Name": "Can of Beans",
+                "Description": "Heinz's Greatest Creation",
+                "Modifier": 1 
+              },
+              {
+                "Name": "Fakanal",
+                "Description": "Hungarian Wooden Spoon",
+                "Modifier": 500
+              }
+              ],
             "Name": "Chest",
-            "Description": "A Wooden Box That Opens",
-            "Contains": [
-            {
-              "Name": "Can of Beans",
-              "Description": "Heinz's Greatest Creation",
-              "Modifier": 1 
-            },
-            {
-              "Name": "Fakanal",
-              "Description": "Hungarian Wooden Spoon",
-              "Modifier": 500
-            }
-            ]
+            "Description": "A Wooden Box That Opens"
+
           }
         ]
       },

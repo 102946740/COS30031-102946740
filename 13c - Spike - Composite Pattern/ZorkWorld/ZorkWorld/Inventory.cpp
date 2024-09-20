@@ -1,27 +1,27 @@
 #include "Inventory.h"
 
-item::item(itemStruc NewItem){
-    Info = NewItem;
-}
-
-void Inventory::AddItem(item ItemAdded)
+void Inventory::addItem(Item ItemAdded)
 {
     items.push_back(ItemAdded);
-    std::cout << "Added: " << ItemAdded.Info.Name << "\n";
 }
 
-void Inventory::RemoveItem(int index)
+void Inventory::removeItem(int index)
 {
     std::cout << "Removed: " << items[index].Info.Name << "\n";
     items.erase(items.begin() + index);
 }
 
-void Inventory::ShowInventory()
+void Inventory::printEntity() const
 {
-    std::cout << "Showing Inventory \n";
+    std::cout << Info.Name << ": " << Info.Description << ": CONTAINER" <<"\n";
+}
+
+void Inventory::printInventory() const
+{
+    std::cout << "Showing Inventory of " << Info.Name;
     int count = 1;
     for (auto& item : items) {
-        std::cout << count << ": " << item.Info.Name << ": Desctiption - " << item.Info.Description << "\n";
+        std::cout << count << ": " << item.Info.Name << ": Desctiption - " << item.Info.Description << ": Modifier - " << item.Info.EffectMod << "\n";
 
         count++;
     }

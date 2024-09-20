@@ -7,7 +7,7 @@ void DebugTreeCommand::execute(const std::vector<std::string>& args)
         std::cout << "Location: " << loc.name << "\n";
         std::cout << "Entities: ";
         for (const auto& entity : loc.entities) {
-            entity.printEntity();
+            entity->printEntity();
         }
     }
     std::cout << "\n";

@@ -1,16 +1,16 @@
-#include "Entity.h"
+#include "Inventory.h"
 
 void Entity::loadFromJson(const nlohmann::json& json)
 {
     if (json.contains("Name")) {
-        name = json["Name"];
+        Info.Name = json["Name"];
     }
     if (json.contains("Description")) {
-        description = json["Description"];
+        Info.Description = json["Description"];
     }
 }
 
 void Entity::printEntity() const
 {
-    std::cout << name << ": " << description << "\n";
+    std::cout << Info.Name << ": " << Info.Description << "\n";
 }
