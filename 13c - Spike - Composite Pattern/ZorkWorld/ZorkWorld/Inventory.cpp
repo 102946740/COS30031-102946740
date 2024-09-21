@@ -13,12 +13,12 @@ void Inventory::removeItem(int index)
 
 void Inventory::printEntity() const
 {
-    std::cout << Info.Name << ": " << Info.Description << ": CONTAINER" <<"\n";
+    std::cout << Info.Name << ": " << Info.Description << ": CONTAINER" << "\n";
 }
 
 void Inventory::printInventory() const
 {
-    std::cout << "Showing Inventory of " << Info.Name;
+    std::cout << "Showing Inventory of " << Info.Name << "\n";
     int count = 1;
     for (auto& item : items) {
         std::cout << count << ": " << item.Info.Name << ": Desctiption - " << item.Info.Description << ": Modifier - " << item.Info.EffectMod << "\n";

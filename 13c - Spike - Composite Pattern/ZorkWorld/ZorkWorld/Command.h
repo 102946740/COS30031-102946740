@@ -32,6 +32,17 @@ public:
     void execute(const std::vector<std::string>& args) override;
 };
 
+class LookInCommand : public Command {
+private:
+    Location** currentLocation;
+
+public:
+    LookInCommand(Location** currentLoc) : currentLocation(currentLoc) {}
+
+    void execute(const std::vector<std::string>& args) override;
+};
+
+
 class AliasCommand : public Command {
 private:
     std::vector<std::pair<std::string, std::string>>& aliases;
@@ -71,3 +82,4 @@ public:
 
     void execute(const std::vector<std::string>& args) override;
 };
+

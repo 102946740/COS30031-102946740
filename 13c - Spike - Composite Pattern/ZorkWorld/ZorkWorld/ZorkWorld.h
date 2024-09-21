@@ -5,8 +5,9 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "Inventory.h"
+//#include "Inventory.h"
 #include <sstream>
 #include "Location.h"
 #include "Command.h"
 #include "CommandProcessor.h"
+#include "Entity.h"

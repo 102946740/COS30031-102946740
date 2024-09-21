@@ -9,7 +9,7 @@ public:
     std::string description;
     std::vector<std::string> items;
     std::vector<std::string> connections;
-    std::vector<std::shared_ptr<Entity>> entities;//smart pointer for entites
+    std::vector<std::shared_ptr<Entity>> entities;
 
     void loadFromJson(const nlohmann::json& json);
 
