@@ -21,8 +21,14 @@ void Location::loadFromJson(const nlohmann::json& json)
                 }
                 entities.push_back(inventory);
             }
-            else {  // Regular item
+            else if (entityJson["Modifier"] != -1) {  // Regular item
                 auto item = std::make_shared<Item>();
+                item->loadFromJson(entityJson);
+                entities.push_back(item);
+            }
+            else {
+                auto item = std::make_shared<Item>();
+                item->Interactable = false;
                 item->loadFromJson(entityJson);
                 entities.push_back(item);
             }

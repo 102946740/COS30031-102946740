@@ -9,6 +9,7 @@ class Entity {
 public:
     virtual ~Entity() = default;
     itemStruc Info;
+    bool Interactable = true;
     virtual void loadFromJson(const nlohmann::json& json);
 
     virtual void printEntity() const;

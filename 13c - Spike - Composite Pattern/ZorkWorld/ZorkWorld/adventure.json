@@ -12,6 +12,11 @@
       
           },
           {
+            "Name": "Door",
+            "Description": "A Locked Door",
+            "Modifier": -1
+          },
+          {
             "Inventory": [
               {
                 "Name": "Beans",
