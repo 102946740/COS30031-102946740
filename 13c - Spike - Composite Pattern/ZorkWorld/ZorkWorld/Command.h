@@ -42,6 +42,17 @@ public:
     void execute(const std::vector<std::string>& args) override;
 };
 
+class takeCommand : public Command {
+private:
+    Location** currentLocation;
+    Inventory& playerInventory;
+
+public:
+    takeCommand(Location** currentLoc, Inventory& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
+
+    void execute(const std::vector<std::string>& args) override;
+};
+
 
 class AliasCommand : public Command {
 private:

@@ -13,12 +13,11 @@ public:
 };
 
 class Inventory : public Entity {
-private:
-    std::vector<Item> items;
 
 public:
     void addItem(Item ItemAdded);
     void removeItem(int index);
     void printEntity() const override;
     void printInventory() const;
+    std::vector<Item> items;
 };

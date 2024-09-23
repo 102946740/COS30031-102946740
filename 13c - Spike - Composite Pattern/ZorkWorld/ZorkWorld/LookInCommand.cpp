@@ -3,7 +3,7 @@
 void LookInCommand::execute(const std::vector<std::string>& args)
 {
     if (args.size() < 1) {
-        std::cout << "Please specify an entity to look at.\n";
+        std::cout << "Please specify an entity to look in.\n";
         return;
     }
 
