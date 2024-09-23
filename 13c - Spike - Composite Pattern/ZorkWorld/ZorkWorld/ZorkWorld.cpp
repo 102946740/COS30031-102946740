@@ -35,6 +35,7 @@ int main() {
     cmdProcessor.addCommand("look in", std::make_unique<LookInCommand>(&currentLocation));
     cmdProcessor.addCommand("take", std::make_unique<takeCommand>(&currentLocation, playerInventory));
     cmdProcessor.addCommand("put", std::make_unique<putCommand>(&currentLocation, playerInventory));
+    cmdProcessor.addCommand("open", std::make_unique<OpenCommand>(&currentLocation, playerInventory));
     cmdProcessor.addCommand("alias", std::make_unique<AliasCommand>(cmdProcessor.getAliases()));
     cmdProcessor.addCommand("debug tree", std::make_unique<DebugTreeCommand>(locations));
     cmdProcessor.addCommand("help", std::make_unique<HelpCommand>(cmdProcessor.getCommands()));

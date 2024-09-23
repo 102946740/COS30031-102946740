@@ -13,6 +13,7 @@ void Location::loadFromJson(const nlohmann::json& json)
 
                 auto inventory = std::make_shared<Inventory>();
                 inventory->loadFromJson(entityJson);
+                inventory->Interactable = false;
 
                 for (const auto& inventoryJson : entityJson["Inventory"]) {
                     auto item = std::make_shared<Item>();
@@ -21,14 +22,8 @@ void Location::loadFromJson(const nlohmann::json& json)
                 }
                 entities.push_back(inventory);
             }
-            else if (entityJson["Modifier"] != -1) {  // Regular item
+            else {  // Regular item
                 auto item = std::make_shared<Item>();
-                item->loadFromJson(entityJson);
-                entities.push_back(item);
-            }
-            else {
-                auto item = std::make_shared<Item>();
-                item->Interactable = false;
                 item->loadFromJson(entityJson);
                 entities.push_back(item);
             }

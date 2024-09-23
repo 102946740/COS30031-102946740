@@ -19,6 +19,10 @@ void takeCommand::execute(const std::vector<std::string>& args) {
             if (entity->Info.Name == entityName) {
                 Inventory* inv = dynamic_cast<Inventory*>(entity.get()); // Check if entity is an inventory
                 if (inv) {
+                    if (!inv->Interactable) {
+                        std::cout << "Container is locked\n";
+                        return;
+                    };
                     bool found = false;
                     int count = 0;
                     for (const auto& item : inv->items) {

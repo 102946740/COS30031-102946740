@@ -139,6 +139,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="LookInCommand.cpp" />
+    <ClCompile Include="OpenCommand.cpp" />
     <ClCompile Include="putCommand.cpp" />
     <ClCompile Include="takeCommansd.cpp" />
     <ClCompile Include="ZorkWorld.cpp" />

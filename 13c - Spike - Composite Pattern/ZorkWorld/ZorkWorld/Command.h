@@ -52,6 +52,16 @@ public:
 
     void execute(const std::vector<std::string>& args) override;
 };
+class OpenCommand : public Command {
+private:
+    Location** currentLocation;
+    Inventory& playerInventory;
+
+public:
+    OpenCommand(Location** currentLoc, Inventory& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
+
+    void execute(const std::vector<std::string>& args) override;
+};
 
 class putCommand : public Command {
 private:

@@ -12,9 +12,9 @@
       
           },
           {
-            "Name": "Door",
-            "Description": "A Locked Door",
-            "Modifier": -1
+            "Name": "Key",
+            "Description": "A Key to open Doors and Chests",
+            "Modifier": 0
           },
           {
             "Inventory": [
