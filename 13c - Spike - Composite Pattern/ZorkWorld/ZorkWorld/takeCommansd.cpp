@@ -1,7 +1,7 @@
 #include "Command.h"
 void takeCommand::execute(const std::vector<std::string>& args) {
     if (args.size() != 3) {
-        std::cout << "Invalid command structure, requires take ITEM from CONTAINER.\n";
+        std::cout << "Invalid command structure, requires 'take ITEM from CONTAINER.'\n";
         return;
     }
     if (args[1] != "from") {
