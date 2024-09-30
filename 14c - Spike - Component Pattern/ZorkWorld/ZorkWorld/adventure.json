@@ -1,0 +1,50 @@
+{
+    "Rooms": [
+      {
+        "Name": "Test Room", 
+        "Description": "This is a room, it's a cool room", 
+        "Connections": ["Pool Room", "Game Room"],
+        "Entities": [
+          {
+            "Name": "Sword",
+            "Description": "A Mighty Blade of Steel",
+            "Modifier": 5
+      
+          },
+          {
+            "Name": "Key",
+            "Description": "A Key to open Doors and Chests",
+            "Modifier": 0
+          },
+          {
+            "Inventory": [
+              {
+                "Name": "Beans",
+                "Description": "Heinz's Greatest Creation",
+                "Modifier": 1 
+              },
+              {
+                "Name": "Fakanal",
+                "Description": "Hungarian Wooden Spoon",
+                "Modifier": 500
+              }
+              ],
+            "Name": "Chest",
+            "Description": "A Wooden Box That Opens"
+
+          }
+        ]
+      },
+      {
+        "Name": "Pool Room",
+        "Description": "A Room with pool tables",
+        "Connections": ["Test Room"]
+      },
+      {
+        "Name": "Game Room",
+        "Description": "A Room with many games",
+        "Connections": ["Test Room"]
+      }
+    ]
+  }
+  

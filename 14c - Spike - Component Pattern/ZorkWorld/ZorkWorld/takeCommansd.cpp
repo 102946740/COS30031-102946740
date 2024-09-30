@@ -16,7 +16,7 @@ void takeCommand::execute(const std::vector<std::string>& args) {
         std::string entityName = args[2];
 
         for (const auto& entity : (*currentLocation)->entities) {
-            if (entity->Info.Name == entityName) { 
+            if (entity->ID.Name == entityName) { 
                 Inventory* inv = dynamic_cast<Inventory*>(entity.get()); // Check if entity is an inventory
                 if (inv) {
                     if (!inv->Interactable) {
@@ -26,7 +26,7 @@ void takeCommand::execute(const std::vector<std::string>& args) {
                     bool found = false;
                     int count = 0;
                     for (const auto& item : inv->items) {
-                        if (item.Info.Name == itemName && item.Interactable) {
+                        if (item.ID.Name == itemName && item.Interactable) {
                             std::cout << "You took: " << itemName << " from: " << entityName << ".\n";
                             found = true;
                             playerInventory.addItem(item); // Add to player inventory
@@ -52,7 +52,7 @@ void takeCommand::execute(const std::vector<std::string>& args) {
         bool found = false;
         int count = 0;
         for (auto it = (*currentLocation)->entities.begin(); it != (*currentLocation)->entities.end(); ++it) {
-            if ((*it)->Info.Name == itemName) {
+            if ((*it)->ID.Name == itemName) {
                 Item* item = dynamic_cast<Item*>((*it).get()); // Check if it's a direct item
                 if (item && item->Interactable) {
                     std::cout << "You took: " << itemName << " from the location.\n";
