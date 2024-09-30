@@ -19,18 +19,18 @@ void takeCommand::execute(const std::vector<std::string>& args) {
             if (entity->ID.Name == entityName) { 
                 Inventory* inv = dynamic_cast<Inventory*>(entity.get()); // Check if entity is an inventory
                 if (inv) {
-                    if (!inv->Interactable) {
+                    if (!inv->Inv.Interactable) {
                         std::cout << "Container is locked\n";
                         return;
                     };
                     bool found = false;
                     int count = 0;
-                    for (const auto& item : inv->items) {
-                        if (item.ID.Name == itemName && item.Interactable) {
+                    for (const auto& item : inv->Inv.Items) {
+                        if (item.ID.Name == itemName && item.stats.Interactable) {
                             std::cout << "You took: " << itemName << " from: " << entityName << ".\n";
                             found = true;
-                            playerInventory.addItem(item); // Add to player inventory
-                            inv->removeItem(count); // Remove from container inventory
+                            playerInventory.Inv.addItem(item); // Add to player inventory
+                            inv->Inv.removeItem(count); // Remove from container inventory
                             return;
                         }
                         count++;
@@ -54,9 +54,9 @@ void takeCommand::execute(const std::vector<std::string>& args) {
         for (auto it = (*currentLocation)->entities.begin(); it != (*currentLocation)->entities.end(); ++it) {
             if ((*it)->ID.Name == itemName) {
                 Item* item = dynamic_cast<Item*>((*it).get()); // Check if it's a direct item
-                if (item && item->Interactable) {
+                if (item && item->stats.Interactable) {
                     std::cout << "You took: " << itemName << " from the location.\n";
-                    playerInventory.addItem(*item); // Add item to player inventory
+                    playerInventory.Inv.addItem(*item); // Add item to player inventory
                     (*currentLocation)->entities.erase(it); // Remove item from location
                     found = true;
                     return;

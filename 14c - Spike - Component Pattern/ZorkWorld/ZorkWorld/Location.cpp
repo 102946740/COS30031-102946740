@@ -13,12 +13,12 @@ void Location::loadFromJson(const nlohmann::json& json)
 
                 auto inventory = std::make_shared<Inventory>();
                 inventory->loadFromJson(entityJson);
-                inventory->stats.Interactable = false;
+                inventory->Inv.Interactable = false;
 
                 for (const auto& inventoryJson : entityJson["Inventory"]) {
                     auto item = std::make_shared<Item>();
                     item->loadFromJson(inventoryJson);
-                    inventory->addItem(*item);
+                    inventory->Inv.addItem(*item);
                 }
                 entities.push_back(inventory);
             }

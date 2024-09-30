@@ -18,11 +18,7 @@ public:
 class Inventory : public Entity{
 
 public:
-    Attributes stats; //Attributes componants
-    std::vector<Item> items;
-    void addItem(Item ItemAdded);
-    void removeItem(int index);
+    InventoryComp Inv;
     void printEntity() const override;
-    void printInventory() const;
     
 };

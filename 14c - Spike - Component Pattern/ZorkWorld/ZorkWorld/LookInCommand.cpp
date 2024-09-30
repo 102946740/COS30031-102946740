@@ -11,9 +11,9 @@ void LookInCommand::execute(const std::vector<std::string>& args)
     for (const auto& entity : (*currentLocation)->entities) {
         if (entity->ID.Name == entityName) {
             Inventory* inv = dynamic_cast<Inventory*>(entity.get()); //casts to check if entity is an inventory
-            if (inv->Interactable) {
+            if (inv->Inv.Interactable) {
                 if (inv) {
-                    inv->printInventory();
+                    inv->Inv.printInventory(inv->ID.Name);
                 }
                 else {
                     std::cout << "Entity is not an Inventory.\n";

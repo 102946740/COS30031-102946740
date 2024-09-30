@@ -1,4 +1,5 @@
 #include "Componants.h"
+#include "Inventory.h"
 #include <string>
 
 bool Attributes::dealDamage(int Dmg)
@@ -21,4 +22,27 @@ std::string Attributes::getDetails() const
 std::string Identifier::getIdentifiers() const
 {
 	return "Name: " + Name + ", Decription: " + Description;
+}
+
+void InventoryComp::addItem(Item ItemAdded)
+{
+	Items.push_back(ItemAdded);
+}
+
+void InventoryComp::removeItem(int index)
+{
+	std::cout << "Removed: " << Items[index].ID.Name << "\n";
+	Items.erase(Items.begin() + index);
+}
+
+void InventoryComp::printInventory(std::string name) const
+{
+	std::cout << "Showing Inventory of " << name << "\n";
+	int count = 1;
+	for (Item item : Items) {
+		std::cout << item.ID.getIdentifiers() << item.stats.getDetails() << "\n";
+
+		count++;
+	}
+	std::cout << "\nEnd of inventory\n\n";
 }

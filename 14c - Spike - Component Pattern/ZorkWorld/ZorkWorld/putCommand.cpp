@@ -20,15 +20,15 @@ void putCommand::execute(const std::vector<std::string>& args) {
                 // Search for the item in the player's inventory
                 bool found = false;
                 int count = 0;
-                for (const auto& item : playerInventory.items) {
+                for (const auto& item : playerInventory.Inv.Items) {
                     if (item.ID.Name == itemName) {
                         // Item found, move it to the container
                         std::cout << "You put: " << itemName << " in: " << containerName << ".\n";
                         found = true;
                         Item itemToMove; // Creates temp item
                         itemToMove.ID = item.ID; // Applies item info
-                        container->addItem(itemToMove);
-                        playerInventory.removeItem(count); // Removes item from player inventory
+                        container->Inv.addItem(itemToMove);
+                        playerInventory.Inv.removeItem(count); // Removes item from player inventory
                         return;
                     }
                     count++;

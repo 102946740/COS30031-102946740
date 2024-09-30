@@ -2,5 +2,5 @@
 
 void InventoryCommand::execute(const std::vector<std::string>& args)
 {
-    playerInventory.printInventory();
+    playerInventory.Inv.printInventory(playerInventory.ID.Name);
 }
