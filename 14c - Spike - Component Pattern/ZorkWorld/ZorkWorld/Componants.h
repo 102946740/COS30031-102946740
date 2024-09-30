@@ -1,7 +1,11 @@
 #pragma once
 #include <iostream>
 
-class Attributes {
+class Component {
+
+};
+
+class Attributes : public Component {
 public:
 	int HP = 0;
 	int Damage = 0;
@@ -12,7 +16,7 @@ public:
 	std::string getDetails() const;
 };
 
-class Identifier {
+class Identifier : public Component {
 public:
 	std::string Name = "";
 	std::string Description = "";
