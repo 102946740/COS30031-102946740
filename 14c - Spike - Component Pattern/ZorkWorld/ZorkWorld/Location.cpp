@@ -1,50 +1,53 @@
 #include "Location.h"
 
-void Location::loadFromJson(const nlohmann::json& json)
-{
+void Location::loadFromJson(const nlohmann::json& json) {
     name = json.value("Name", "");
     description = json.value("Description", "");
-    items = json.value("Items", std::vector<std::string>{});
     connections = json.value("Connections", std::vector<std::string>{});
 
     if (json.contains("Entities")) {
         for (const auto& entityJson : json["Entities"]) {
-            if (entityJson.contains("Inventory")) {  // Checks json if its inventory
+            auto entity = std::make_shared<Entity>();
 
-                auto inventory = std::make_shared<Inventory>();
-                inventory->loadFromJson(entityJson);
-                inventory->Inv.Interactable = false;
+            // Create Identifier Component
+            auto identifier = std::make_shared<Identifier>();
+            identifier->Name = entityJson.value("Name", "Unnamed");
+            identifier->Description = entityJson.value("Description", "No description");
+            entity->compManager.addComponent<Identifier>(identifier); // Add Identifier component
 
-                for (const auto& inventoryJson : entityJson["Inventory"]) {
-                    auto item = std::make_shared<Item>();
-                    item->loadFromJson(inventoryJson);
-                    inventory->Inv.addItem(*item);
+            // Check for inventory
+            if (entityJson.contains("Inventory")) {
+                auto inventoryComp = std::make_shared<InventoryComp>(); 
+                inventoryComp->Interactable = false;
+
+                for (const auto& itemJson : entityJson["Inventory"]) {
+                    auto item = std::make_shared<Entity>();
+
+                    // Create Identifier for item
+                    auto itemIdentifier = std::make_shared<Identifier>();
+                    itemIdentifier->Name = itemJson.value("Name", "Unnamed"); // Correctly get the item's name
+                    itemIdentifier->Description = itemJson.value("Description", "No description"); // Correctly get the item's description
+                    item->compManager.addComponent<Identifier>(itemIdentifier); // Add Identifier for item
+
+                    inventoryComp->addItem(item); // Add item to inventory
                 }
-                entities.push_back(inventory);
+                entity->compManager.addComponent<InventoryComp>(inventoryComp); // Add InventoryComp to the entity
             }
-            else {  // Regular item
-                auto item = std::make_shared<Item>();
-                item->loadFromJson(entityJson);
-                entities.push_back(item);
-            }
+
+            entities.push_back(entity);
         }
     }
 }
 
-void Location::printLocation() const
-{
+void Location::printLocation() const {
     std::cout << "You are at: " << name << "\nDescription: " << description << "\n";
-    std::cout << "Items: ";
-    for (const auto& item : items) {
-        std::cout << item << ", ";
-    }
-    std::cout << "\nConnections: ";
+    std::cout << "Connections: ";
     for (const auto& connection : connections) {
         std::cout << connection << ", ";
     }
     std::cout << "\nEntities: ";
     for (const auto& entity : entities) {
-        entity->printEntity();  // Call the appropriate printEntity() based on the actual type
+        entity->printEntity();
     }
     std::cout << "\n";
 }

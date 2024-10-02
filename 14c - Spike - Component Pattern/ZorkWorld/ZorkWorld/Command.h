@@ -2,8 +2,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "location.h"
-#include "Inventory.h"
+#include "Location.h"
+
 class Command {
 public:
     virtual void execute(const std::vector<std::string>& args) = 0;
@@ -42,38 +42,38 @@ public:
     void execute(const std::vector<std::string>& args) override;
 };
 
-class takeCommand : public Command {
+class TakeCommand : public Command {
 private:
     Location** currentLocation;
-    Inventory& playerInventory;
+    Entity& playerInventory;
 
 public:
-    takeCommand(Location** currentLoc, Inventory& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
+    TakeCommand(Location** currentLoc, Entity& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
 
     void execute(const std::vector<std::string>& args) override;
 };
+
 class OpenCommand : public Command {
 private:
     Location** currentLocation;
-    Inventory& playerInventory;
+    Entity& playerInventory;
 
 public:
-    OpenCommand(Location** currentLoc, Inventory& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
+    OpenCommand(Location** currentLoc, Entity& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
 
     void execute(const std::vector<std::string>& args) override;
 };
 
-class putCommand : public Command {
+class PutCommand : public Command {
 private:
     Location** currentLocation;
-    Inventory& playerInventory;
+    Entity& playerInventory;
 
 public:
-    putCommand(Location** currentLoc, Inventory& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
+    PutCommand(Location** currentLoc, Entity& pInventory) : currentLocation(currentLoc), playerInventory(pInventory) {}
 
     void execute(const std::vector<std::string>& args) override;
 };
-
 
 class AliasCommand : public Command {
 private:
@@ -107,11 +107,10 @@ public:
 
 class InventoryCommand : public Command {
 private:
-    Inventory& playerInventory;
+    Entity& playerInventory;
 
 public:
-    InventoryCommand(Inventory& inv) : playerInventory(inv) {}
+    InventoryCommand(Entity& inv) : playerInventory(inv) {}
 
     void execute(const std::vector<std::string>& args) override;
 };
-

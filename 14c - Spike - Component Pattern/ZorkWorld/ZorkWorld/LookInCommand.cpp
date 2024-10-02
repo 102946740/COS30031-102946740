@@ -1,31 +1,37 @@
 #include "Command.h"
-#include "Inventory.h"
-void LookInCommand::execute(const std::vector<std::string>& args)
-{
+#include "Entity.h"
+
+void LookInCommand::execute(const std::vector<std::string>& args) {
     if (args.size() < 1) {
         std::cout << "Please specify an entity to look in.\n";
         return;
     }
 
     std::string entityName = args[0];
+
+    if (currentLocation == nullptr || *currentLocation == nullptr) {
+        std::cout << "Current location is not set.\n";
+        return;
+    }
+
     for (const auto& entity : (*currentLocation)->entities) {
-        if (entity->ID.Name == entityName) {
-            Inventory* inv = dynamic_cast<Inventory*>(entity.get()); //casts to check if entity is an inventory
-            if (inv->Inv.Interactable) {
-                if (inv) {
-                    inv->Inv.printInventory(inv->ID.Name);
+        auto identifier = entity->compManager.getComponent<Identifier>(); 
+        if (identifier && identifier->Name == entityName) {
+            auto inv = entity->compManager.getComponent<InventoryComp>();
+            if (inv) {
+                if (inv->Interactable) {
+                    inv->printInventory(identifier->Name);
                 }
                 else {
-                    std::cout << "Entity is not an Inventory.\n";
+                    std::cout << "This container is locked.\n";
                 }
                 return;
             }
             else {
-                std::cout << "This Container is Locked.\n";
+                std::cout << "Entity is not an Inventory.\n";
                 return;
             }
         }
-
     }
 
     std::cout << "Entity '" << entityName << "' not found in this location.\n";

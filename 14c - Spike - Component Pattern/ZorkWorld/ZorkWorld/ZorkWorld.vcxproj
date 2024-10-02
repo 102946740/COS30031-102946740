@@ -133,11 +133,9 @@
     <ClCompile Include="InventoryCommand.cpp" />
     <ClCompile Include="HelpCommand.cpp" />
     <ClCompile Include="DebugTreeCommand.cpp" />
-    <ClCompile Include="Item.cpp" />
     <ClCompile Include="LookAtCommand.cpp" />
     <ClCompile Include="GoCommand.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="LookInCommand.cpp" />
     <ClCompile Include="OpenCommand.cpp" />
@@ -149,8 +147,8 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandProcessor.h" />
     <ClInclude Include="Componants.h" />
+    <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ZorkWorld.h" />
