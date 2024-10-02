@@ -4,7 +4,11 @@
 
 class Item;
 
-class Attributes {
+class Component {
+
+};
+
+class Attributes : public Component {
 public:
 	int HP = 0;
 	int Damage = 0;
@@ -15,14 +19,14 @@ public:
 	std::string getDetails() const;
 };
 
-class Identifier {
+class Identifier : public Component {
 public:
 	std::string Name = "";
 	std::string Description = "";
 	std::string getIdentifiers() const;
 };
 
-class InventoryComp {
+class InventoryComp : public Component {
 public:
 	bool Interactable = true;
 	std::vector<Item> Items;
