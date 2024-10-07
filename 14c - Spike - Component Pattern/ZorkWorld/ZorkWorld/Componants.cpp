@@ -1,4 +1,4 @@
-#include "Componants.h"  // Make sure this is the correct filename
+#include "Componants.h"  
 #include "Entity.h"
 #include <string>
 
@@ -29,13 +29,13 @@ std::string Identifier::getIdentifiers() const {
 
 // InventoryComp Class Implementation
 void InventoryComp::addItem(std::shared_ptr<Entity> ItemAdded) {
-    Items.push_back(ItemAdded); // Store the item as a shared pointer
+    Items.push_back(ItemAdded); 
 }
 
 void InventoryComp::removeItem(int index) {
     if (index >= 0 && index < Items.size()) {
         std::cout << "Removed: " << Items[index]->compManager.getComponent<Identifier>()->Name << "\n";
-        Items.erase(Items.begin() + index); // Safe removal
+        Items.erase(Items.begin() + index); 
     }
     else {
         std::cout << "Invalid index for removal.\n";
@@ -46,7 +46,7 @@ void InventoryComp::printInventory(const std::string& name) const {
     std::cout << "Showing Inventory of " << name << "\n" << "Amount of Items: " << Items.size() << "\n";
 
     if (Items.empty()) {
-        std::cout << "No items in inventory.\n"; // Added check for empty inventory
+        std::cout << "No items in inventory.\n"; 
         return;
     }
 

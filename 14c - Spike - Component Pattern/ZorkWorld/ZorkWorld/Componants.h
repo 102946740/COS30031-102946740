@@ -39,3 +39,4 @@ public:
     void removeItem(int index);
     void printInventory(const std::string& name) const;
 };
+
