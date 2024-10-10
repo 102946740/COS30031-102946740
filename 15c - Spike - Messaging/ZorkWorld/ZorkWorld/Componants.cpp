@@ -3,16 +3,17 @@
 #include <string>
 
 // Attributes Class Implementation
-bool Attributes::dealDamage(int Dmg) {
+int Attributes::dealDamage(int Dmg) {
     HP -= Dmg;
 
     // Check if HP is less than or equal to 0 to determine if the entity is alive
     if (HP <= 0) {
-        Alive = false;  // Mark as not alive
-        return false;   // Return false, as the entity is no longer alive
+        Alive = false;
+        Interactable = false;// Mark as not alive
+        return HP;   // Return false, as the entity is no longer alive
     }
 
-    return true; // Return true, as the entity is still alive
+    return HP; // Return true, as the entity is still alive
 }
 
 std::string Attributes::getDetails() const {

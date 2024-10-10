@@ -19,7 +19,7 @@ public:
     bool Interactable = true;
     bool Alive = true;
 
-    bool dealDamage(int Dmg);
+    int dealDamage(int Dmg);
     std::string getDetails() const;
 };
 

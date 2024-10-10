@@ -10,4 +10,4 @@
 #include "Command.h"
 #include "CommandProcessor.h"
 #include "Entity.h"
-//#include "Componants.h"
+#include "MessageHandler.h"

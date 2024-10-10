@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Location.h"
+#include "MessageHandler.h"
 
 class Command {
 public:
@@ -112,5 +113,14 @@ private:
 public:
     InventoryCommand(Entity& inv) : playerInventory(inv) {}
 
+    void execute(const std::vector<std::string>& args) override;
+};
+
+class AttackCommand : public Command {
+private:
+    MessageHandler& messenger;
+    Entity& playerInventory;
+public: 
+    AttackCommand(MessageHandler& Messenger, Entity& inv) : messenger(Messenger), playerInventory(inv) {}
     void execute(const std::vector<std::string>& args) override;
 };

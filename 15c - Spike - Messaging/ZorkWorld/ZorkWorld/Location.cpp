@@ -1,6 +1,6 @@
 #include "Location.h"
 
-void Location::loadFromJson(const nlohmann::json& json) {
+void Location::loadFromJson(const nlohmann::json& json, MessageHandler& Messenger) {
     name = json.value("Name", "");
     description = json.value("Description", "");
     connections = json.value("Connections", std::vector<std::string>{});
@@ -52,6 +52,8 @@ void Location::loadFromJson(const nlohmann::json& json) {
             }
 
             entities.push_back(entity);
+            
+            Messenger.Entities.insert({ identifier->Name, entity }); //adds to messenger umap
         }
     }
 }

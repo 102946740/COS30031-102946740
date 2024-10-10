@@ -1,6 +1,6 @@
 #include "ZorkWorld.h"
 
-
+MessageHandler Messages;
 
 
 int main() {
@@ -18,7 +18,7 @@ int main() {
     if (jsonData.contains("Rooms")) {
         for (const auto& room : jsonData["Rooms"]) {
             Location location;
-            location.loadFromJson(room);
+            location.loadFromJson(room, Messages);
             locations.push_back(location);
         }
     }
@@ -42,6 +42,7 @@ int main() {
     cmdProcessor.addCommand("debug tree", std::make_unique<DebugTreeCommand>(locations));
     cmdProcessor.addCommand("help", std::make_unique<HelpCommand>(cmdProcessor.getCommands()));
     cmdProcessor.addCommand("inventory", std::make_unique<InventoryCommand>(playerInventory));
+    cmdProcessor.addCommand("attack", std::make_unique<AttackCommand>(Messages, playerInventory));
 
     std::string input;
     while (true) {
