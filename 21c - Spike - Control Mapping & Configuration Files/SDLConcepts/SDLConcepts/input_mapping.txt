@@ -1,0 +1,5 @@
+Move_Up E
+Move_Down S
+Move_Left A
+Move_Right D
+Jump SPACE
