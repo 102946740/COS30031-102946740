@@ -52,7 +52,7 @@ void Location::loadFromJson(const nlohmann::json& json, MessageHandler& Messenge
             }
 
             entities.push_back(entity);
-            
+            // add constructor
             Messenger.Entities.insert({ identifier->Name, entity }); //adds to messenger umap
         }
     }

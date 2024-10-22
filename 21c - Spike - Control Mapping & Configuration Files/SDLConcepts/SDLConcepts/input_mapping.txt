@@ -1,4 +1,4 @@
-Move_Up E
+Move_Up W
 Move_Down S
 Move_Left A
 Move_Right D
