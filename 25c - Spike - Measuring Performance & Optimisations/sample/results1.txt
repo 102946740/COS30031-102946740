@@ -1,0 +1,57 @@
+-- New Test: 	Test A1Loops: 	602
+Time (ms): 	10036
+Loops/Second: 	59.9841
+Num boxes: 	2
+-- New Test: 	Test A2Loops: 	602
+Time (ms): 	10025
+Loops/Second: 	60.0499
+Num boxes: 	2
+-- New Test: 	Test BLoops: 	601
+Time (ms): 	10026
+Loops/Second: 	59.9441
+Num boxes: 	2
+-- New Test: 	Test CLoops: 	601
+Time (ms): 	10023
+Loops/Second: 	59.9621
+Num boxes: 	2
+-- New Test: 	Test DLoops: 	601
+Time (ms): 	10024
+Loops/Second: 	59.9561
+Num boxes: 	2
+-- New Test: 	Test A1Loops: 	601
+Time (ms): 	10021
+Loops/Second: 	59.9741
+Num boxes: 	2
+-- New Test: 	Test A2Loops: 	600
+Time (ms): 	10021
+Loops/Second: 	59.8743
+Num boxes: 	2
+-- New Test: 	Test BLoops: 	601
+Time (ms): 	10025
+Loops/Second: 	59.9501
+Num boxes: 	2
+-- New Test: 	Test CLoops: 	601
+Time (ms): 	10024
+Loops/Second: 	59.9561
+Num boxes: 	2
+-- New Test: 	Test DLoops: 	602
+Time (ms): 	10032
+Loops/Second: 	60.008
+Num boxes: 	2
+-- New Test: 	Test A1Loops: 	602
+Time (ms): 	10030
+Loops/Second: 	60.0199
+Num boxes: 	2
+-- New Test: 	Test A2Loops: 	601
+Time (ms): 	10019
+Loops/Second: 	59.986
+Num boxes: 	2
+-- New Test: 	Test BLoops: 	602
+Time (ms): 	10025
+Loops/Second: 	60.0499
+Num boxes: 	2
+-- New Test: 	Test CLoops: 	596
+Time (ms): 	10026
+Loops/Second: 	59.4454
+Num boxes: 	2
+-- New Test: 	Test D
