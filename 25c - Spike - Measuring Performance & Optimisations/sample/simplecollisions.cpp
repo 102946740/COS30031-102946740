@@ -69,53 +69,52 @@ void optimized_crash_test_all() {
         }
     }
 }
-
-// Update box positions and check for collisions
 void update_boxes() {
+#pragma omp parallel for  // Optional parallelization
     for (int i = 0; i < BOX_COUNT; i++) {
         boxes[i].update_position();
     }
-    optimized_crash_test_all();  // Using optimized collision detection function
+    optimized_crash_test_all();
 }
 
 int run_test(const char* title) {
-    // Disable SDL rendering setup since we are not rendering for performance testing
-
-    // Redirect console output to file
-    std::ofstream outFile("results.txt", std::ios::app);
-    std::ofstream errFile("results.txt", std::ios::app);
-    if (outFile.is_open() && errFile.is_open()) {
-        std::cout.rdbuf(outFile.rdbuf());
-        std::cerr.rdbuf(errFile.rdbuf());
-    }
-    else {
+    // Open log file once and reuse it
+    static std::ofstream outFile("results.txt", std::ios::app);
+    if (!outFile.is_open()) {
         std::cerr << "Error opening results.txt for logging." << std::endl;
         return 1;
     }
 
-    std::cout << "-- New Test: \t" << title << std::endl;
+    outFile << "-- New Test: \t" << title << std::endl;
     init_boxes();  // Initialize all boxes for testing
 
     Uint32 loop_count = 0;
     auto start = std::chrono::high_resolution_clock::now();
-    auto target = std::chrono::milliseconds(TEST_TIME);
+    auto target = start + std::chrono::seconds(10);  // 10-second target
 
-    while (std::chrono::high_resolution_clock::now() - start < target) {
+    // Main loop optimized to reduce time checks
+    while (true) {
         update_boxes();
         loop_count++;
+
+        // Check the time every 1000 loops for efficiency
+        if (loop_count % 1000 == 0) {
+            if (std::chrono::high_resolution_clock::now() >= target) break;
+        }
     }
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-    // Display and log results
-    std::cout << "Loops: \t" << loop_count << std::endl;
-    std::cout << "Time (ms): \t" << duration << std::endl;
-    std::cout << "Loops/Second: \t" << (float(loop_count) / duration * 1000.0) << std::endl;
-    std::cout << "Num boxes: \t" << BOX_COUNT << std::endl;
+    // Log the results after the test loop completes
+    outFile << "Loops: \t" << loop_count << "\n";
+    outFile << "Time (ms): \t" << duration << "\n";
+    outFile << "Loops/Second: \t" << (float(loop_count) / duration * 1000.0) << "\n";
+    outFile << "Num boxes: \t" << BOX_COUNT << "\n";
 
     return 0;
 }
+
 
 int main(int argc, char* args[]) {
     for (BOX_COUNT = 2; BOX_COUNT <= 50; ++BOX_COUNT) {
